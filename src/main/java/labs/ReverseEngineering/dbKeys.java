@@ -11,11 +11,10 @@ public class dbKeys {
 	private String pkName;
 	private String pkTableName;
 	private String fkColumnName;
-
 	private String fkName;
 	private String fkTableName;
 
-	public void getColumns(Connection con) {
+	public void getKeys(Connection con) {
 		try {
 			DatabaseMetaData dbmd = con.getMetaData();
 			ResultSet rs = dbmd.getPrimaryKeys(null, null, table.getTABLE_NAME());
