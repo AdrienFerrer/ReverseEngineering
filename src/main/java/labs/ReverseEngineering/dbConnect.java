@@ -5,13 +5,13 @@ import java.sql.SQLException;
 
 import com.mysql.jdbc.Connection;
 
-public class dbconnect {
+public class dbConnect {
 	private static final String URL = "jdbc:mysql://localhost/sakila";
 	private static final String user ="root";
 	private static final String password = "root";
 	private Connection con;
 	
-	public dbconnect() {
+	public dbConnect() {
 		try {
 			con = (Connection) DriverManager.getConnection(URL,user,password);
 		} catch (SQLException e) {
