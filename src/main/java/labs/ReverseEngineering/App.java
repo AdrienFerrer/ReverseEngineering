@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class App {
 	public static void main(String[] args) {
-		Connection con = new dbconnect().getConnection();
+		Connection con = new dbConnect().getConnection();
 		System.out.println(getDatabaseTablesNames(con));
 	}
 
