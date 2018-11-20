@@ -54,12 +54,12 @@ public class App {
 
 	public static List<dbColumns> makeMapColumn(Connection con, List<dbTable> tablesMap) {
 		List<dbColumns> listColumn = new ArrayList<dbColumns>();
-		for (int i = 0; i < tablesMap.size(); i++) {
+		for (dbTable str : tablesMap) {
 			try {
 				DatabaseMetaData dbmd = con.getMetaData();
-				ResultSet rs = dbmd.getColumns(null, null, null, tablesMap.get(i).getTableName());
+				ResultSet rs = dbmd.getColumns(null, null, str.getTableName(), null);
 				while (rs.next()) {
-					listColumn.add(new dbColumns(tablesMap.get(i), rs.getString("COLUMN_NAME"), rs.getInt("DATA_TYPE"),
+					listColumn.add(new dbColumns(str, rs.getString("COLUMN_NAME"), rs.getInt("DATA_TYPE"),
 							rs.getString("TYPE_NAME"), rs.getInt("COLUMN_SIZE"), rs.getInt("ORDINAL_POSITION")));
 					System.out.println(
 							rs.getString("COLUMN_NAME") + rs.getInt("COLUMN_SIZE") + rs.getInt("ORDINAL_POSITION"));
