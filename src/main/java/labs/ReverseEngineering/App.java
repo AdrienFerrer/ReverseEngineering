@@ -30,9 +30,10 @@ public class App {
 		 * for (int i = 0; i < tablesMap.size(); i++) {
 		 * System.out.println(tablesMap.get(i).getTableName()); }
 		 */
-		Map<dbTable, dbColumns> tableColumn = new HashMap<dbTable, dbColumns>();
-		tableColumn = makeMapColumn(con, tablesMap);
-		//System.out.println(tableColumn.get(tableColumn.get(tablesMap.get(1)).getColumnName()));
+		// Map<dbTable, dbColumns> tableColumn = new HashMap<dbTable, dbColumns>();
+		List<dbColumns> listColumn = new ArrayList<dbColumns>();
+		listColumn = makeMapColumn(con, tablesMap);
+		// System.out.println(tableColumn.get(tableColumn.get(tablesMap.get(1)).getColumnName()));
 	}
 
 	public static List<dbTable> makeMapTables(Connection con) {
@@ -51,24 +52,23 @@ public class App {
 		return tablesMap;
 	}
 
-	public static Map<dbTable, dbColumns> makeMapColumn(Connection con, List<dbTable> tablesMap) {
-		Map<dbTable, dbColumns> tableColumn = new HashMap<dbTable, dbColumns>();
+	public static List<dbColumns> makeMapColumn(Connection con, List<dbTable> tablesMap) {
+		List<dbColumns> listColumn = new ArrayList<dbColumns>();
 		for (int i = 0; i < tablesMap.size(); i++) {
 			try {
 				DatabaseMetaData dbmd = con.getMetaData();
 				ResultSet rs = dbmd.getColumns(null, null, null, tablesMap.get(i).getTableName());
 				while (rs.next()) {
-					tableColumn.put(tablesMap.get(i),
-							new dbColumns(tablesMap.get(i), rs.getString("COLUMN_NAME"), rs.getInt("DATA_TYPE"),
-									rs.getString("TYPE_NAME"), rs.getInt("COLUMN_SIZE"),
-									rs.getInt("ORDINAL_POSITION")));
-					System.out.println(rs.getString("COLUMN_NAME") + rs.getInt("COLUMN_SIZE") + rs.getInt("ORDINAL_POSITION"));
+					listColumn.add(new dbColumns(tablesMap.get(i), rs.getString("COLUMN_NAME"), rs.getInt("DATA_TYPE"),
+							rs.getString("TYPE_NAME"), rs.getInt("COLUMN_SIZE"), rs.getInt("ORDINAL_POSITION")));
+					System.out.println(
+							rs.getString("COLUMN_NAME") + rs.getInt("COLUMN_SIZE") + rs.getInt("ORDINAL_POSITION"));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
-		return tableColumn;
+		return listColumn;
 	}
 
 }
