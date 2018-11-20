@@ -26,7 +26,7 @@ public class dbIndex {
 	public void getIndex(Connection con) {
 		try {
 			DatabaseMetaData dbmd = con.getMetaData();
-			ResultSet rs = dbmd.getIndexInfo(null, null, table.getTABLE_NAME(), false, false);
+			ResultSet rs = dbmd.getIndexInfo(null, null, table.getTableName(), false, false);
 			while (rs.next()) {
 				nonUnique = rs.getBoolean("NON_UNIQUE");
 				indexQualifier = rs.getString("QUALIFIER");

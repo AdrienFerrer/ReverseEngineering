@@ -16,35 +16,59 @@ import java.util.Map;
 public class App {
 	public static void main(String[] args) {
 		Connection con = new dbConnect().getConnection();
-		
+
 		// EXAMPLE OF TABLE CREATION
-		//dbTable test = new dbTable();
-		//test.getTable(con, "actor");
-		//System.out.println(test.getTABLE_NAME());
+		// dbTable test = new dbTable();
+		// test.getTable(con, "actor");
+		// System.out.println(test.getTABLE_NAME());
 		//
-		
-		
+
 		// TESTING MAPTABLES CREATION
-		System.out.println(makeMapTables (con).get("actor").TABLE_NAME);
+		List<dbTable> tablesMap = new ArrayList<dbTable>();
+		tablesMap = makeMapTables(con);
+		/*
+		 * for (int i = 0; i < tablesMap.size(); i++) {
+		 * System.out.println(tablesMap.get(i).getTableName()); }
+		 */
+		Map<dbTable, dbColumns> tableColumn = new HashMap<dbTable, dbColumns>();
+		tableColumn = makeMapColumn(con, tablesMap);
+		//System.out.println(tableColumn.get(tableColumn.get(tablesMap.get(1)).getColumnName()));
 	}
-	
-	public static HashMap<String,dbTable> makeMapTables (Connection con){
-		List<String> tableNames = new ArrayList<String>();
-		HashMap<String,dbTable> tablesMap = new HashMap<String,dbTable>();
+
+	public static List<dbTable> makeMapTables(Connection con) {
+		List<dbTable> tablesMap = new ArrayList<dbTable>();
 		try {
 			DatabaseMetaData dbmd = con.getMetaData();
 			String[] types = { "TABLE" };
 			ResultSet rs = dbmd.getTables(null, "%", "%", types);
 			while (rs.next()) {
-				tableNames.add(rs.getString("TABLE_NAME"));
+				tablesMap.add(new dbTable(rs.getString("TABLE_SCHEM"), rs.getString("TABLE_NAME"),
+						rs.getString("TABLE_TYPE")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		for(String name:tableNames) {
-			dbTable Table = new dbTable(con, name);
-        	tablesMap.put(name, Table);
-		}
 		return tablesMap;
 	}
+
+	public static Map<dbTable, dbColumns> makeMapColumn(Connection con, List<dbTable> tablesMap) {
+		Map<dbTable, dbColumns> tableColumn = new HashMap<dbTable, dbColumns>();
+		for (int i = 0; i < tablesMap.size(); i++) {
+			try {
+				DatabaseMetaData dbmd = con.getMetaData();
+				ResultSet rs = dbmd.getColumns(null, null, null, tablesMap.get(i).getTableName());
+				while (rs.next()) {
+					tableColumn.put(tablesMap.get(i),
+							new dbColumns(tablesMap.get(i), rs.getString("COLUMN_NAME"), rs.getInt("DATA_TYPE"),
+									rs.getString("TYPE_NAME"), rs.getInt("COLUMN_SIZE"),
+									rs.getInt("ORDINAL_POSITION")));
+					System.out.println(rs.getString("COLUMN_NAME") + rs.getInt("COLUMN_SIZE") + rs.getInt("ORDINAL_POSITION"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return tableColumn;
+	}
+
 }

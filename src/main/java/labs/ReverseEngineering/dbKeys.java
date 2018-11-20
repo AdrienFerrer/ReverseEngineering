@@ -17,7 +17,7 @@ public class dbKeys {
 	public void getKeys(Connection con) {
 		try {
 			DatabaseMetaData dbmd = con.getMetaData();
-			ResultSet rs = dbmd.getPrimaryKeys(null, null, table.getTABLE_NAME());
+			ResultSet rs = dbmd.getPrimaryKeys(null, null, table.getTableName());
 			while (rs.next()) {
 				pkColumnName = rs.getString("PKCOLUMN_NAME");
 				pkName = rs.getString("PK_NAME");

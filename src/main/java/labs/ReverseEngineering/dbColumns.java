@@ -13,15 +13,21 @@ public class dbColumns {
 	private int columnSize;
 	private int ordinalPosition;
 
-	public dbColumns(dbTable table) {
+	public dbColumns(dbTable table, String columnName, int dataType, String typeName, int columnSize,
+			int ordinalPosition) {
 		super();
-		this.setTable(table);
+		this.table = table;
+		this.columnName = columnName;
+		this.dataType = dataType;
+		this.typeName = typeName;
+		this.columnSize = columnSize;
+		this.ordinalPosition = ordinalPosition;
 	}
 
 	public void getColumns(Connection con) {
 		try {
 			DatabaseMetaData dbmd = con.getMetaData();
-			ResultSet rs = dbmd.getColumns(null, null, null, table.getTABLE_NAME());
+			ResultSet rs = dbmd.getColumns(null, null, null, table.getTableName());
 			while (rs.next()) {
 				columnName = rs.getString("COLUMN_NAME");
 				dataType = rs.getInt("DATA_TYPE");
