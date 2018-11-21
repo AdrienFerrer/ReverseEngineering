@@ -22,14 +22,14 @@ public class App {
 		sqlQuery(Tables);
 		
 		//TESTING TABLES
-		System.out.println(Tables.getTables().get(0).getAllColumns().get(1).getColumnName());
+		//System.out.println(Tables.getTables().get(0).getAllColumns().get(0).getColumnName());
 		//System.out.println();
 	}
 	
 	public static String sqlQuery (dbTables Tables) {
 		for(int i=0;i<Tables.getSize();i++) {
 			for(int j=0;j<Tables.getTables().size();j++) {
-				for(int k=0;j<Tables.getTables().get(j).getSize();k++) {
+				for(int k=0;k<Tables.getTables().get(j).getSize();k++) {
 					System.out.println(Tables.getTables().get(j).getAllColumns().get(k).getColumnName());
 				}
 			}
