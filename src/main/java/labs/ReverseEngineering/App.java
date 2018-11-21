@@ -23,19 +23,62 @@ public class App {
 		
 		//TESTING TABLES
 		System.out.println(Tables.getTables().get(0).getAllColumns().get(1).getColumnName());
-		System.out.println();
+		//System.out.println();
 	}
 	
 	public static String sqlQuery (dbTables Tables) {
 		for(int i=0;i<Tables.getSize();i++) {
 			for(int j=0;j<Tables.getTables().size();j++) {
-				System.out.println(Tables.getTables().get(j));
+				for(int k=0;j<Tables.getTables().get(j).getSize();j++) {
+					System.out.println(Tables.getTables().get(j).getAllColumns().get(k).getColumnName());
+				}
+
 			}
 			
 		}
 		
 		return "";
 	}
+	/*
+	public static List<dbKeys> makeListKeys(Connection con, List<dbTable> tablesMap) {
+		List<dbKeys> listKeys = new ArrayList<dbKeys>();
+		for (dbTable str : tablesMap) {
+			try {
+				DatabaseMetaData dbmd = con.getMetaData();
+				ResultSet rs = dbmd.getPrimaryKeys(null, null, str.getTableName());
+				while (rs.next()) {
+					listKeys.add(new dbKeys(str, rs.getString("PKCOLUMN_NAME"), rs.getString("PK_NAME"),
+							rs.getString("PKTABLE_NAME"), rs.getString("FKCOLUMN_NAME"), rs.getString("FK_NAME"),
+							rs.getString("FKTABLE_NAME")));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return listKeys;
+	}
+
+	public static List<dbIndex> makeListIndex(Connection con, List<dbTable> tablesMap) {
+		List<dbIndex> listIndex = new ArrayList<dbIndex>();
+		for (dbTable str : tablesMap) {
+			try {
+				DatabaseMetaData dbmd = con.getMetaData();
+				ResultSet rs = dbmd.getIndexInfo(null, null, str.getTableName(), false, false);
+				while (rs.next()) {
+					listIndex.add(new dbIndex(str, rs.getBoolean("NON_UNIQUE"), rs.getString("QUALIFIER"),
+							rs.getString("INDEX_NAME"), rs.getShort("TYPE"), rs.getShort("ORDINAL_POSITION"),
+							rs.getString("COLUMN_NAME"), rs.getString("ASC_OR_DESC"), rs.getInt("CARDINALITY"),
+							rs.getInt("PAGES"), rs.getString("FILTER_CONDITION")));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return listIndex;
+	}
+	
+	
+	
 /*
 	public static List<dbTable> makeMapTables(Connection con) {
 		List<dbTable> tablesMap = new ArrayList<dbTable>();
