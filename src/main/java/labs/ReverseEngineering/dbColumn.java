@@ -26,8 +26,9 @@ public class dbColumn {
 		this.columnName = columnName;
 	}
 
-	public int getDataType() {
-		return dataType;
+	public String getDataType() {
+		String datatype=Integer.toString(this.dataType);
+		return datatype;
 	}
 
 	public void setDataType(int dataType) {

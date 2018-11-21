@@ -33,7 +33,7 @@ public class App {
 			for(int j=0;j<Tables.getTables().size();j++) {
 				query=query+"CREATE TABLE "+Tables.getTables().get(j).getTableName()+"(";
 				for(int k=0;k<Tables.getTables().get(j).getSize();k++) {
-					query=query+Tables.getTables().get(j).getAllColumns().get(k).getColumnName()+",";
+					query=query+Tables.getTables().get(j).getAllColumns().get(k).getColumnName()+" "+Tables.getTables().get(j).getAllColumns().get(k).getDataType()+",";
 					//System.out.println(Tables.getTables().get(j).getAllColumns().get(k).getColumnName());
 				}
 				query=query+");";
