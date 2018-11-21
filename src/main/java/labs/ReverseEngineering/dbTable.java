@@ -28,6 +28,7 @@ public class dbTable {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		/*
 		try {
 			DatabaseMetaData dbmd = con.getMetaData();
 			ResultSet rs = dbmd.getPrimaryKeys(null, null, tableName);
@@ -50,7 +51,7 @@ public class dbTable {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	public int getSize() {

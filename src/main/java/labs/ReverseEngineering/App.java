@@ -19,7 +19,7 @@ public class App {
 
 		dbTables Tables=new dbTables(con);
 		
-		sqlQuery(Tables);
+		System.out.println(sqlQuery(Tables));
 		
 		//TESTING TABLES
 		//System.out.println(Tables.getTables().get(0).getAllColumns().get(0).getColumnName());
@@ -27,15 +27,20 @@ public class App {
 	}
 	
 	public static String sqlQuery (dbTables Tables) {
+		
+		String query="";
 		for(int i=0;i<Tables.getSize();i++) {
 			for(int j=0;j<Tables.getTables().size();j++) {
+				query=query+"CREATE TABLE "+Tables.getTables().get(j).getTableName()+"(";
 				for(int k=0;k<Tables.getTables().get(j).getSize();k++) {
-					System.out.println(Tables.getTables().get(j).getAllColumns().get(k).getColumnName());
+					query=query+Tables.getTables().get(j).getAllColumns().get(k).getColumnName()+",";
+					//System.out.println(Tables.getTables().get(j).getAllColumns().get(k).getColumnName());
 				}
+				query=query+");";
 			}
 		}
 		
-		return "";
+		return query;
 	}
 	/*
 	public static List<dbKeys> makeListKeys(Connection con, List<dbTable> tablesMap) {
