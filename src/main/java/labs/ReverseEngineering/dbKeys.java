@@ -14,26 +14,19 @@ public class dbKeys {
 	private String fkName;
 	private String fkTableName;
 
-	public void getKeys(Connection con) {
-		try {
-			DatabaseMetaData dbmd = con.getMetaData();
-			ResultSet rs = dbmd.getPrimaryKeys(null, null, table.getTableName());
-			while (rs.next()) {
-				pkColumnName = rs.getString("PKCOLUMN_NAME");
-				pkName = rs.getString("PK_NAME");
-				pkTableName = rs.getString("PKTABLE_NAME");
-				fkColumnName = rs.getString("FKCOLUMN_NAME");
-				fkName = rs.getString("FK_NAME");
-				fkTableName = rs.getString("FKTABLE_NAME");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
 
-	public dbKeys(dbTable table) {
+
+
+	public dbKeys(dbTable table, String pkColumnName, String pkName, String pkTableName, String fkColumnName,
+			String fkName, String fkTableName) {
 		super();
 		this.table = table;
+		this.pkColumnName = pkColumnName;
+		this.pkName = pkName;
+		this.pkTableName = pkTableName;
+		this.fkColumnName = fkColumnName;
+		this.fkName = fkName;
+		this.fkTableName = fkTableName;
 	}
 
 	public dbTable getTable() {
