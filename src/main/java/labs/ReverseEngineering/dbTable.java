@@ -8,56 +8,73 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class dbTable {
-	private String tableName="";
-	private List<dbColumn>allColumns = new ArrayList<dbColumn>();
-	private int size=0;
+	private String tableName = "";
+	private List<dbColumn> allColumns = new ArrayList<dbColumn>();
+	private List<dbKeys> listKeys = new ArrayList<dbKeys>();
+	private List<dbIndex> listIndex = new ArrayList<dbIndex>();
+	private int size = 0;
 
-	public dbTable(Connection con,String tableName) {
-		this.tableName=tableName;
-		
+	public dbTable(Connection con, String tableName) {
+		this.tableName = tableName;
 		try {
 			DatabaseMetaData dbmd = con.getMetaData();
 			ResultSet rs = dbmd.getColumns(null, null, tableName, null);
 			while (rs.next()) {
-				dbColumn Column = new dbColumn(rs.getString("COLUMN_NAME"),rs.getInt("DATA_TYPE"),rs.getString("TYPE_NAME"),rs.getInt("COLUMN_SIZE"),rs.getInt("ORDINAL_POSITION"));
+				dbColumn Column = new dbColumn(rs.getString("COLUMN_NAME"), rs.getInt("DATA_TYPE"),
+						rs.getString("TYPE_NAME"), rs.getInt("COLUMN_SIZE"), rs.getInt("ORDINAL_POSITION"));
 				allColumns.add(Column);
 				this.size++;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		try {
+			DatabaseMetaData dbmd = con.getMetaData();
+			ResultSet rs = dbmd.getPrimaryKeys(null, null, tableName);
+			while (rs.next()) {
+				listKeys.add(
+						new dbKeys(rs.getString("PKCOLUMN_NAME"), rs.getString("PK_NAME"), rs.getString("PKTABLE_NAME"),
+								rs.getString("FKCOLUMN_NAME"), rs.getString("FK_NAME"), rs.getString("FKTABLE_NAME")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			DatabaseMetaData dbmd = con.getMetaData();
+			ResultSet rs = dbmd.getIndexInfo(null, null, tableName, false, false);
+			while (rs.next()) {
+				listIndex.add(new dbIndex(rs.getBoolean("NON_UNIQUE"), rs.getString("QUALIFIER"),
+						rs.getString("INDEX_NAME"), rs.getShort("TYPE"), rs.getShort("ORDINAL_POSITION"),
+						rs.getString("COLUMN_NAME"), rs.getString("ASC_OR_DESC"), rs.getInt("CARDINALITY"),
+						rs.getInt("PAGES"), rs.getString("FILTER_CONDITION")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
-
 
 	public int getSize() {
 		return size;
 	}
 
-
 	public void setSize(int size) {
 		this.size = size;
 	}
-
 
 	public String getTableName() {
 		return tableName;
 	}
 
-
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
 	}
-
 
 	public List<dbColumn> getAllColumns() {
 		return allColumns;
 	}
 
-
 	public void setAllColumns(List<dbColumn> allColumns) {
 		this.allColumns = allColumns;
 	}
-
-
 
 }

@@ -1,12 +1,5 @@
 package labs.ReverseEngineering;
-
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 public class dbIndex {
-	private dbTables table;
 	private boolean nonUnique;
 	private String indexQualifier;
 	private String indexName;
@@ -18,38 +11,19 @@ public class dbIndex {
 	private int pages;
 	private String filterCondition;
 
-	public dbIndex(dbTables table) {
+	public dbIndex(boolean nonUnique, String indexQualifier, String indexName, short type, short ordinalPosition,
+			String columnName, String ascOrDesc, int cardinality, int pages, String filterCondition) {
 		super();
-		this.table = table;
-	}
-
-	public void getIndex(Connection con) {
-		try {
-			DatabaseMetaData dbmd = con.getMetaData();
-			ResultSet rs = dbmd.getIndexInfo(null, null, table.getTableName(), false, false);
-			while (rs.next()) {
-				nonUnique = rs.getBoolean("NON_UNIQUE");
-				indexQualifier = rs.getString("QUALIFIER");
-				indexName = rs.getString("INDEX_NAME");
-				type = rs.getShort("TYPE");
-				ordinalPosition = rs.getShort("ORDINAL_POSITION");
-				columnName = rs.getString("COLUMN_NAME");
-				ascOrDesc = rs.getString("ASC_OR_DESC");
-				cardinality = rs.getInt("CARDINALITY");
-				pages = rs.getInt("PAGES");
-				filterCondition = rs.getString("FILTER_CONDITION");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public dbTables getTable() {
-		return table;
-	}
-
-	public void setTable(dbTables table) {
-		this.table = table;
+		this.nonUnique = nonUnique;
+		this.indexQualifier = indexQualifier;
+		this.indexName = indexName;
+		this.type = type;
+		this.ordinalPosition = ordinalPosition;
+		this.columnName = columnName;
+		this.ascOrDesc = ascOrDesc;
+		this.cardinality = cardinality;
+		this.pages = pages;
+		this.filterCondition = filterCondition;
 	}
 
 	public boolean isNonUnique() {

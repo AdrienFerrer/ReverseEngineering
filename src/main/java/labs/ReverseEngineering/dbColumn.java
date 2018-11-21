@@ -1,12 +1,6 @@
 package labs.ReverseEngineering;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 public class dbColumn {
-	private dbTables table;
 	private String columnName;
 	private int dataType;
 	private String typeName;
@@ -16,7 +10,6 @@ public class dbColumn {
 	public dbColumn(String columnName, int dataType, String typeName, int columnSize,
 			int ordinalPosition) {
 		super();
-		this.table = table;
 		this.columnName = columnName;
 		this.dataType = dataType;
 		this.typeName = typeName;
@@ -64,13 +57,4 @@ public class dbColumn {
 	public void setOrdinalPosition(int ordinalPosition) {
 		this.ordinalPosition = ordinalPosition;
 	}
-
-	public dbTables getTable() {
-		return table;
-	}
-
-	public void setTable(dbTables table) {
-		this.table = table;
-	}
-
 }
