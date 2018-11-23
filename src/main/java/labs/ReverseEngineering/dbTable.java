@@ -39,19 +39,33 @@ public class dbTable {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}*/
 		try {
 			DatabaseMetaData dbmd = con.getMetaData();
 			ResultSet rs = dbmd.getIndexInfo(null, null, tableName, false, false);
 			while (rs.next()) {
-				listIndex.add(new dbIndex(rs.getBoolean("NON_UNIQUE"), rs.getString("QUALIFIER"),
-						rs.getString("INDEX_NAME"), rs.getShort("TYPE"), rs.getShort("ORDINAL_POSITION"),
-						rs.getString("COLUMN_NAME"), rs.getString("ASC_OR_DESC"), rs.getInt("CARDINALITY"),
-						rs.getInt("PAGES"), rs.getString("FILTER_CONDITION")));
+				listIndex.add(new dbIndex(rs.getBoolean("NON_UNIQUE"),
+						rs.getString("INDEX_NAME"),rs.getString("COLUMN_NAME")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}*/
+		}
+	}
+
+	public List<dbKeys> getListKeys() {
+		return listKeys;
+	}
+
+	public void setListKeys(List<dbKeys> listKeys) {
+		this.listKeys = listKeys;
+	}
+
+	public List<dbIndex> getListIndex() {
+		return listIndex;
+	}
+
+	public void setListIndex(List<dbIndex> listIndex) {
+		this.listIndex = listIndex;
 	}
 
 	public int getSize() {
