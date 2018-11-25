@@ -1,9 +1,6 @@
 package labs.ReverseEngineering;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class App {
 	public static void main(String[] args) {
@@ -12,10 +9,9 @@ public class App {
 		System.out.println(sqlStructureQuery(Tables));
 		System.out.println(sqlIndexQuery(Tables));
 		System.out.println(sqlKeysQuery(Tables));
-
-		// DECOMMENTER AVANT D'ENVOYER => C'est la génération du fichier
+		//Create Query
 		String fullquery = sqlStructureQuery(Tables) + sqlIndexQuery(Tables) + sqlKeysQuery(Tables);
-		// Change File path
+		//Generate File
 		WriteSqlFile file = new WriteSqlFile(fullquery, "CreateSchema", ".sql");
 		file.generateFile();
 
