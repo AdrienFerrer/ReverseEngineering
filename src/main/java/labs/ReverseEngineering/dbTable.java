@@ -28,10 +28,9 @@ public class dbTable {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		/*
 		try {
 			DatabaseMetaData dbmd = con.getMetaData();
-			ResultSet rs = dbmd.getPrimaryKeys(null, null, tableName);
+			ResultSet rs = dbmd.getImportedKeys(null, null, tableName);
 			while (rs.next()) {
 				listKeys.add(
 						new dbKeys(rs.getString("PKCOLUMN_NAME"), rs.getString("PK_NAME"), rs.getString("PKTABLE_NAME"),
@@ -39,7 +38,7 @@ public class dbTable {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}*/
+		}
 		try {
 			DatabaseMetaData dbmd = con.getMetaData();
 			ResultSet rs = dbmd.getIndexInfo(null, null, tableName, false, false);

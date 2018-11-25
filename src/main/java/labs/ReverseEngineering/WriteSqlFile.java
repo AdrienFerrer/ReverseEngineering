@@ -6,19 +6,19 @@ import java.io.IOException;
 
 public class WriteSqlFile {
 	private String query;
-	private String pathFile;
+	private String fileName;
 	private String extension;
 
 	public WriteSqlFile(String query, String pathFile, String extension) {
 		super();
 		this.query = query;
-		this.pathFile = pathFile;
+		this.fileName = pathFile;
 		this.extension = extension;
 	}
 
 	public void generateFile() {
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(pathFile + extension));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(fileName + extension));
 			writer.write(query);
 			writer.close();
 		} catch (IOException e) {
@@ -36,11 +36,11 @@ public class WriteSqlFile {
 	}
 
 	public String getPathFile() {
-		return pathFile;
+		return fileName;
 	}
 
 	public void setPathFile(String pathFile) {
-		this.pathFile = pathFile;
+		this.fileName = pathFile;
 	}
 
 	public String getExtension() {
